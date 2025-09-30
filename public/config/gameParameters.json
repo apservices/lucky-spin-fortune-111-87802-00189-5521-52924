@@ -1,0 +1,40 @@
+{
+  "rtp": {
+    "base": 0.90,
+    "byLevel": {
+      "1-5": 0.88,
+      "6-10": 0.90,
+      "11-15": 0.92,
+      "16+": 0.94
+    }
+  },
+  "symbolProbabilities": {
+    "tiger": 0.02,
+    "fox": 0.08,
+    "frog": 0.12,
+    "envelope": 0.18,
+    "orange": 0.25,
+    "scroll": 0.15
+  },
+  "multipliers": {
+    "tiger": [50, 100, 500],
+    "fox": [20, 40, 80],
+    "frog": [15, 30, 60],
+    "envelope": [12, 24, 48],
+    "orange": [8, 16, 32],
+    "scroll": [25, 50, 100]
+  },
+  "bettingLimits": {
+    "minBet": 25,
+    "maxBetMultiplier": 0.10,
+    "dailyLimit": 50000,
+    "cooldownSeconds": 3,
+    "maxSessionMinutes": 120
+  },
+  "responsibleGaming": {
+    "alertIntervals": [30, 60, 90],
+    "maxContinuousMinutes": 120,
+    "dailyLimitWarning": 0.80,
+    "maxSpinsPer30Min": 100
+  }
+}
