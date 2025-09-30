@@ -34,18 +34,9 @@ class AssetManager {
   }
 
   private preloadCriticalAssets() {
-    const criticalAssets = [
-      '/src/assets/sprites/envelope-idle.webp',
-      '/src/assets/sprites/fox-idle.webp',
-      '/src/assets/sprites/frog-idle.webp',
-      '/src/assets/sprites/orange-idle.webp',
-      '/src/assets/sprites/scroll-idle.webp',
-      '/src/assets/sprites/tiger-idle.webp'
-    ];
-
-    criticalAssets.forEach(url => {
-      this.loadAsset(url, { priority: 'critical', preload: true, webpFallback: true });
-    });
+    // Sprites are now imported as ES6 modules, no need to preload via URL
+    // The Vite build will handle sprite optimization automatically
+    console.log('[AssetManager] Critical assets will be loaded on-demand via imports');
   }
 
   private supportsWebP(): Promise<boolean> {

@@ -29,14 +29,13 @@ const GameLobby: React.FC = () => {
   const { state } = useGameState();
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleStartGame = async () => {
+  const handleStartGame = () => {
     setIsLoading(true);
     
-    // Simulate loading delay for smooth transition
-    await new Promise(resolve => setTimeout(resolve, 800));
-    
-    // Navigate to game with transition
-    navigate('/game');
+    // Navigate immediately for better responsiveness
+    requestAnimationFrame(() => {
+      navigate('/game');
+    });
   };
 
   const menuItems = [
@@ -176,6 +175,7 @@ const GameLobby: React.FC = () => {
                         : 'bg-gradient-to-br from-black/40 to-purple-900/40 backdrop-blur-md border-primary/30'
                     } ${item.disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
                     onClick={() => !item.disabled && item.action()}
+                    data-testid={item.primary ? 'play-now-button' : undefined}
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">

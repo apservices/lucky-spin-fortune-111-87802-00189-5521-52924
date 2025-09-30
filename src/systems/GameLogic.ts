@@ -427,11 +427,20 @@ export class GameLogic {
     return result;
   }
 
+  private rtpCache = new Map<number, { value: number; timestamp: number }>();
+  
   /**
    * Calculate RTP (Return to Player) percentage
-   * Optimized to avoid blocking the UI
+   * Optimized with caching to avoid redundant calculations
    */
   public calculateRTP(sampleSize: number = 1000, playerLevel: number = 1): number {
+    // Check cache first (valid for 5 minutes)
+    const cached = this.rtpCache.get(playerLevel);
+    const now = Date.now();
+    if (cached && (now - cached.timestamp) < 300000) {
+      return cached.value;
+    }
+
     // Quick theoretical RTP calculation based on symbol probabilities
     const weights = this.getSymbolWeights();
     let expectedValue = 0;
@@ -444,7 +453,18 @@ export class GameLogic {
     
     // Apply level-based RTP adjustment
     const levelMultiplier = Math.min(1 + (playerLevel - 1) * 0.01, 1.2); // Max 20% bonus
-    return Math.min(expectedValue * levelMultiplier * 100, 95); // Cap at 95%
+    const rtp = Math.min(expectedValue * levelMultiplier * 100, 95); // Cap at 95%
+    
+    // Cache the result
+    this.rtpCache.set(playerLevel, { value: rtp, timestamp: now });
+    
+    // Clean old cache entries (keep only last 10 levels)
+    if (this.rtpCache.size > 10) {
+      const keys = Array.from(this.rtpCache.keys());
+      keys.slice(0, keys.length - 10).forEach(key => this.rtpCache.delete(key));
+    }
+    
+    return rtp;
   }
 
   /**

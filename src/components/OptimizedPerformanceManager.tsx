@@ -5,6 +5,8 @@
 
 import React, { useEffect, useState } from 'react';
 import { performanceOptimizer } from '@/utils/performance/PerformanceOptimizer';
+import { fastPerformanceMonitor } from '@/utils/performance/FastPerformanceMonitor';
+import { memoryOptimizer } from '@/utils/performance/MemoryOptimizer';
 
 interface PerformanceState {
   fps: number;
@@ -22,38 +24,37 @@ export const OptimizedPerformanceManager: React.FC = () => {
   });
 
   useEffect(() => {
-    // Initialize performance optimization
-    performanceOptimizer.preloadCriticalAssets();
-
-    // Monitor performance every 2 seconds
-    const monitorInterval = setInterval(() => {
-      const metrics = performanceOptimizer.getMetrics();
+    // Subscribe to fast performance monitor
+    const unsubscribe = fastPerformanceMonitor.subscribe((metrics) => {
       setPerformanceState({
         fps: metrics.fps,
         memoryUsage: metrics.memoryUsage,
-        qualityLevel: performanceOptimizer.getSettings().enableAdaptiveQuality ? 'medium' : 'high',
+        qualityLevel: metrics.fps < 30 ? 'low' : metrics.fps < 45 ? 'medium' : 'high',
         isOptimizing: false
       });
 
-      // Auto-optimize if performance is poor
-      if (metrics.fps < 30 && metrics.memoryUsage > 150) {
+      // Auto-optimize if performance is critical
+      if (metrics.fps < 20 || metrics.memoryUsage > 200) {
         performanceOptimizer.optimizeNow();
+        memoryOptimizer.forceCleanup();
+      } else if (memoryOptimizer.isMemoryHigh()) {
+        memoryOptimizer.cleanup();
       }
-    }, 2000);
+    });
 
     // Cleanup on page visibility change
     const handleVisibilityChange = () => {
       if (document.hidden) {
         performanceOptimizer.optimizeNow();
+        memoryOptimizer.forceCleanup();
       }
     };
 
     document.addEventListener('visibilitychange', handleVisibilityChange);
 
     return () => {
-      clearInterval(monitorInterval);
+      unsubscribe();
       document.removeEventListener('visibilitychange', handleVisibilityChange);
-      performanceOptimizer.destroy();
     };
   }, []);
 

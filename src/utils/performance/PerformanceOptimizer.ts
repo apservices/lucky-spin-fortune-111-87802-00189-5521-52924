@@ -163,26 +163,9 @@ class PerformanceOptimizer {
   }
 
   public async preloadCriticalAssets() {
-    if (!this.settings.enableLazyLoading) return;
-
-    const criticalAssets = [
-      '/sprites/tiger-idle.webp',
-      '/sprites/tiger-win.webp',
-      '/sprites/fox-idle.webp',
-      '/sprites/fox-win.webp',
-      '/sprites/frog-idle.webp',
-      '/sprites/frog-win.webp'
-    ];
-
-    const promises = criticalAssets.map(asset => 
-      assetManager.loadAsset(asset, { priority: 'critical' })
-    );
-
-    try {
-      await Promise.all(promises);
-    } catch (error) {
-      console.warn('Some critical assets failed to preload:', error);
-    }
+    // Assets are now handled via ES6 imports in Vite
+    // No need to preload via AssetManager
+    console.log('[PerformanceOptimizer] Assets handled via ES6 imports');
   }
 
   public async loadAssetLazy(url: string, priority: 'critical' | 'normal' | 'low' = 'normal') {

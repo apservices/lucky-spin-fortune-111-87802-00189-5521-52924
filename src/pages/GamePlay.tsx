@@ -24,18 +24,18 @@ const GamePlay: React.FC = () => {
 
   // Initialize game loading
   useEffect(() => {
-    const initializeGame = async () => {
-      // Simulate game loading with realistic delays
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      // Emit game start event
-      gameEvents.emit(GameEventType.SPIN_START, {
-        gameId: 'fortune-tiger-fullscreen',
-        betAmount: 0,
-        timestamp: Date.now()
+    const initializeGame = () => {
+      // Use requestAnimationFrame for smooth transition
+      requestAnimationFrame(() => {
+        // Emit game start event
+        gameEvents.emit(GameEventType.SPIN_START, {
+          gameId: 'fortune-tiger-fullscreen',
+          betAmount: 0,
+          timestamp: Date.now()
+        });
+        
+        setIsLoading(false);
       });
-      
-      setIsLoading(false);
     };
 
     initializeGame();
