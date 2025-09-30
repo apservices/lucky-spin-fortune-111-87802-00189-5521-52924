@@ -48,6 +48,27 @@ const GameLobby: React.FC = () => {
       disabled: isLoading
     },
     {
+      title: '🃏 Blackjack Social',
+      subtitle: 'Jogo de cartas clássico',
+      icon: PlayCircle,
+      action: () => navigate('/blackjack'),
+      badge: 'Novo!'
+    },
+    {
+      title: '🚀 Rocket Crash',
+      subtitle: 'Resgate antes do crash',
+      icon: TrendingUp,
+      action: () => navigate('/crash'),
+      badge: 'Popular'
+    },
+    {
+      title: '🎮 Zodiac Match',
+      subtitle: 'Puzzle Match-3',
+      icon: Gamepad2,
+      action: () => navigate('/puzzle'),
+      badge: 'Casual'
+    },
+    {
       title: 'Loja de Moedas',
       subtitle: 'Adquirir moedas virtuais',
       icon: Coins,
@@ -59,7 +80,7 @@ const GameLobby: React.FC = () => {
       subtitle: 'Trocar por recompensas',
       icon: Gift,
       action: () => navigate('/rewards'),
-      badge: 'Novo!'
+      badge: 'Hot'
     },
     {
       title: 'Conquistas',
