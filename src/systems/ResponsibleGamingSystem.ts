@@ -173,10 +173,28 @@ class ResponsibleGamingManager {
       return false;
     }
 
-    // Check cooldown
+    // Check cooldown (3 seconds minimum between spins)
     const timeSinceLastSpin = Date.now() - this.state.lastSpinTime;
-    if (timeSinceLastSpin < (this.config.bettingLimits?.cooldownSeconds || 3) * 1000) {
+    const cooldownMs = (this.config.bettingLimits?.cooldownSeconds || 3) * 1000;
+    if (timeSinceLastSpin < cooldownMs) {
       return false;
+    }
+
+    // Check frequency limit (max 1 spin per second average)
+    const oneMinuteAgo = Date.now() - 60000;
+    if (this.state.lastSpinTime > oneMinuteAgo) {
+      const recentSpinCount = this.state.dailySpinCount; // Simplified check
+      if (recentSpinCount > 60) { // More than 1 per second average
+        this.addAlert({
+          id: 'frequency-warning',
+          type: 'warning',
+          title: 'Frequência de apostas alta',
+          message: 'Você está jogando muito rápido. Faça uma pausa.',
+          duration: 5000,
+          timestamp: Date.now(),
+          canDismiss: true
+        });
+      }
     }
 
     // Update state
@@ -185,7 +203,7 @@ class ResponsibleGamingManager {
     this.state.lastSpinTime = Date.now();
     this.saveState();
 
-    // Show recreational reminder
+    // Show recreational reminder every 50 spins
     if (this.state.dailySpinCount % 50 === 0) {
       this.addAlert({
         id: `recreational-${this.state.dailySpinCount}`,
