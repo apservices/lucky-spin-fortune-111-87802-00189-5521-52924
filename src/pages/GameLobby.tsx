@@ -21,7 +21,8 @@ import {
   Crown,
   Gamepad2,
   TrendingUp,
-  Coins
+  Coins,
+  Sparkles
 } from 'lucide-react';
 
 const GameLobby: React.FC = () => {
@@ -60,6 +61,13 @@ const GameLobby: React.FC = () => {
       icon: TrendingUp,
       action: () => navigate('/crash'),
       badge: 'Popular'
+    },
+    {
+      title: '🎰 Roleta Brasileira',
+      subtitle: 'Roleta clássica premium',
+      icon: Crown,
+      action: () => navigate('/roulette'),
+      badge: 'Luxo'
     },
     {
       title: '🎮 Zodiac Match',

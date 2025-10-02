@@ -16,6 +16,7 @@ import GamePlay from '@/pages/GamePlay';
 import BlackjackGame from '@/pages/BlackjackGame';
 import CrashGame from '@/pages/CrashGame';
 import PuzzleGame from '@/pages/PuzzleGame';
+import RouletteGame from '@/pages/RouletteGame';
 import NotFound from '@/pages/NotFound';
 
 // Lazy-loaded components for better performance
@@ -49,9 +50,10 @@ function App() {
             <Routes>
               <Route path="/" element={<GameLobby />} />
               <Route path="/game" element={<GamePlay />} />
-              <Route path="/blackjack" element={<BlackjackGame />} />
-              <Route path="/crash" element={<CrashGame />} />
-              <Route path="/puzzle" element={<PuzzleGame />} />
+          <Route path="/blackjack" element={<BlackjackGame />} />
+          <Route path="/crash" element={<CrashGame />} />
+          <Route path="/puzzle" element={<PuzzleGame />} />
+          <Route path="/roulette" element={<RouletteGame />} />
               <Route path="/missions" element={<MissionsPage />} />
               <Route path="/achievements" element={<AchievementsPage />} />
               <Route path="/daily-rewards" element={<DailyRewardsPage />} />
