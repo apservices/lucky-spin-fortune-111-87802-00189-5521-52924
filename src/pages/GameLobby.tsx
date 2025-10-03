@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useGameState } from '@/systems/GameStateSystem';
 import { ParticleBackground } from '@/components/ParticleBackground';
+import { AIAssistant } from '@/components/AIAssistant';
 import { 
   PlayCircle, 
   Settings, 
@@ -278,6 +279,9 @@ const GameLobby: React.FC = () => {
             </Card>
           </motion.div>
         )}
+
+        {/* AI Assistant */}
+        <AIAssistant />
 
       </div>
     </ParticleBackground>
