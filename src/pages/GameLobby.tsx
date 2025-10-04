@@ -11,7 +11,8 @@ import { Badge } from '@/components/ui/badge';
 import { useGameState } from '@/systems/GameStateSystem';
 import { ParticleBackground } from '@/components/ParticleBackground';
 import { AIAssistant } from '@/components/AIAssistant';
-import { 
+import { RecreationalGamingReminder } from '@/components/RecreationalGamingReminder';
+import {
   PlayCircle, 
   Settings, 
   Trophy, 
@@ -282,6 +283,9 @@ const GameLobby: React.FC = () => {
 
         {/* AI Assistant */}
         <AIAssistant />
+
+        {/* Recreational Gaming Reminder */}
+        <RecreationalGamingReminder triggerCount={50} />
 
       </div>
     </ParticleBackground>

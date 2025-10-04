@@ -12,6 +12,9 @@ const PRECACHE_ASSETS = [
   '/index.html',
   '/manifest.json',
   '/config/gameParameters.json',
+  '/icons/icon-192x192.png',
+  '/icons/icon-512x512.png',
+  '/icons/splash-1080x1920.png',
   // Critical sprites
   '/src/assets/sprites/tiger-idle.webp',
   '/src/assets/sprites/fox-idle.webp',
