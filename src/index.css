@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 @import "./styles/mobile-optimizations.css";
+@import "./styles/mobile-first.css";
 
 /* === APPLE-INSPIRED PREMIUM DESIGN SYSTEM === 
    High-contrast, vibrant colors optimized for both light and dark modes
@@ -47,6 +48,12 @@
     --fortune-ember: 15 100% 68%;
     --fortune-crimson: 345 90% 68%;
     --fortune-bronze: 25 85% 60%;
+    
+    /* Safe area insets for mobile devices */
+    --safe-area-inset-top: env(safe-area-inset-top, 0px);
+    --safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
+    --safe-area-inset-left: env(safe-area-inset-left, 0px);
+    --safe-area-inset-right: env(safe-area-inset-right, 0px);
     
     /* === PREMIUM PGBET COLORS === */
     --pgbet-gold: 45 100% 75%;

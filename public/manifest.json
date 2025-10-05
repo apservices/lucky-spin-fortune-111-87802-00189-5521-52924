@@ -1,10 +1,10 @@
 {
-  "name": "Zodiac Fortune - Jogo Recreativo",
-  "short_name": "Zodiac Fortune",
-  "description": "Jogo de caça-níqueis recreativo com moedas virtuais. 100% entretenimento, sem apostas reais.",
+  "name": "Fortune Tiger - Zodiac Slots Premium",
+  "short_name": "Fortune Tiger",
+  "description": "🐅 Jogo Tigrinho Premium! Gire a roda zodiacal e ganhe moedas virtuais. Jogo recreativo +18, 100% diversão!",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#1a1a2e",
+  "background_color": "#000000",
   "theme_color": "#ffd700",
   "orientation": "portrait",
   "scope": "/",
@@ -30,6 +30,7 @@
     }
   ],
   "categories": ["games", "entertainment"],
+  "keywords": ["fortune tiger", "tigrinho", "slots", "jogo", "zodiac", "brasil", "moedas virtuais", "cassino social"],
   "lang": "pt-BR",
   "dir": "ltr"
 }

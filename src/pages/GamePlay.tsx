@@ -5,19 +5,21 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { LazyGameComponent } from '@/components/OptimizedGameLazyLoader';
+import { ZodiacWheelSlot } from '@/components/ZodiacWheelSlot';
+import { BottomTabNavigation } from '@/components/BottomTabNavigation';
 import { SpriteSystem } from '@/components/SpriteSystem';
 import { GamePauseMenu } from '@/components/GamePauseMenu';
 import { GameSplashScreen } from '@/components/GameSplashScreen';
 import { GameNavigationBar } from '@/components/GameNavigationBar';
-import { useGameState } from '@/systems/GameStateSystem';
+import { useGameState, useGameActions } from '@/systems/GameStateSystem';
 import { useGamePersistence } from '@/hooks/useGamePersistence';
 import { gameEvents, GameEventType } from '@/systems/EventSystem';
 
 const GamePlay: React.FC = () => {
   const navigate = useNavigate();
   const { state } = useGameState();
-  const { saveGameState } = useGamePersistence(); // Add persistence
+  const { setCoins, setEnergy } = useGameActions();
+  const { saveGameState } = useGamePersistence();
   const [isLoading, setIsLoading] = useState(true);
   const [isPaused, setIsPaused] = useState(false);
   const [showExitConfirmation, setShowExitConfirmation] = useState(false);
@@ -131,14 +133,24 @@ const GamePlay: React.FC = () => {
         
         {/* Main Game Area */}
         <motion.div
-          className="w-full h-full"
+          className="w-full h-full flex items-center justify-center p-4 pb-24 overflow-y-auto"
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 1.05 }}
           transition={{ duration: 0.5, ease: "easeInOut" }}
         >
-          <LazyGameComponent component="simple" />
+          <div className="max-w-2xl w-full">
+            <ZodiacWheelSlot
+              coins={state.coins}
+              energy={state.energy}
+              onCoinsChange={setCoins}
+              onEnergyChange={setEnergy}
+            />
+          </div>
         </motion.div>
+
+        {/* Bottom Navigation */}
+        <BottomTabNavigation />
 
         {/* Pause Menu Overlay */}
         <AnimatePresence>

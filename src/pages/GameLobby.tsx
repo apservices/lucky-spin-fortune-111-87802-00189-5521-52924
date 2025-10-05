@@ -12,6 +12,9 @@ import { useGameState } from '@/systems/GameStateSystem';
 import { ParticleBackground } from '@/components/ParticleBackground';
 import { AIAssistant } from '@/components/AIAssistant';
 import { RecreationalGamingReminder } from '@/components/RecreationalGamingReminder';
+import { BottomTabNavigation } from '@/components/BottomTabNavigation';
+import { TutorialOnboarding } from '@/components/TutorialOnboarding';
+import { FortuneSplashScreen } from '@/components/FortuneSplashScreen';
 import {
   PlayCircle, 
   Settings, 
@@ -31,6 +34,11 @@ const GameLobby: React.FC = () => {
   const navigate = useNavigate();
   const { state } = useGameState();
   const [isLoading, setIsLoading] = useState(false);
+  const [showSplash, setShowSplash] = useState(true);
+
+  if (showSplash) {
+    return <FortuneSplashScreen onComplete={() => setShowSplash(false)} />;
+  }
 
   const handleStartGame = () => {
     setIsLoading(true);
@@ -286,6 +294,12 @@ const GameLobby: React.FC = () => {
 
         {/* Recreational Gaming Reminder */}
         <RecreationalGamingReminder triggerCount={50} />
+
+        {/* Bottom Tab Navigation */}
+        <BottomTabNavigation />
+
+        {/* Tutorial Onboarding */}
+        <TutorialOnboarding />
 
       </div>
     </ParticleBackground>
