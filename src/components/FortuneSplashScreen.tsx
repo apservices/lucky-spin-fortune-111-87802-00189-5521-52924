@@ -1,16 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Scene3DWrapper } from '@/components/3D/Scene3DWrapper';
+import { Tiger3DModel } from '@/components/3D/Tiger3DModel';
 
 export const FortuneSplashScreen: React.FC<{ onComplete: () => void }> = ({ onComplete }) => {
   const [isVisible, setIsVisible] = useState(true);
+  const [show3D, setShow3D] = useState(false);
 
   useEffect(() => {
+    // Show 3D tiger after brief delay
+    const show3DTimer = setTimeout(() => {
+      setShow3D(true);
+    }, 500);
+
     const timer = setTimeout(() => {
       setIsVisible(false);
       setTimeout(onComplete, 500);
-    }, 3000);
+    }, 4000); // Extended to 4s for 3D animation
 
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(show3DTimer);
+      clearTimeout(timer);
+    };
   }, [onComplete]);
 
   return (
@@ -48,48 +59,42 @@ export const FortuneSplashScreen: React.FC<{ onComplete: () => void }> = ({ onCo
 
           {/* Main content */}
           <div className="relative z-10 text-center space-y-8">
-            {/* Tiger emoji with glow effect */}
-            <motion.div
-              initial={{ scale: 0, rotate: -180 }}
-              animate={{ scale: 1, rotate: 0 }}
-              transition={{ 
-                type: 'spring', 
-                damping: 10,
-                duration: 1 
-              }}
-              className="relative"
-            >
+            {/* 3D Tiger Model */}
+            {show3D ? (
               <motion.div
-                animate={{ 
-                  scale: [1, 1.2, 1],
-                  rotate: [0, 5, -5, 0]
-                }}
+                initial={{ scale: 0, rotateY: -720 }}
+                animate={{ scale: 1, rotateY: 0 }}
                 transition={{ 
-                  duration: 2,
-                  repeat: Infinity,
-                  repeatType: 'reverse'
+                  type: 'spring', 
+                  damping: 12,
+                  duration: 2
                 }}
+                className="h-64 w-full"
+              >
+                <Scene3DWrapper
+                  cameraPosition={[0, 1, 6]}
+                  fallback={
+                    <div className="text-9xl filter drop-shadow-[0_0_30px_rgba(255,215,0,0.8)]">
+                      🐅
+                    </div>
+                  }
+                >
+                  <Tiger3DModel
+                    state="roar"
+                    scale={2}
+                    position={[0, -0.5, 0]}
+                  />
+                </Scene3DWrapper>
+              </motion.div>
+            ) : (
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
                 className="text-9xl filter drop-shadow-[0_0_30px_rgba(255,215,0,0.8)]"
               >
                 🐅
               </motion.div>
-              
-              {/* Glow rings */}
-              <motion.div
-                className="absolute inset-0 flex items-center justify-center"
-                initial={{ scale: 0.8, opacity: 0 }}
-                animate={{ 
-                  scale: [1, 1.5, 1],
-                  opacity: [0.5, 0, 0.5]
-                }}
-                transition={{ 
-                  duration: 2,
-                  repeat: Infinity
-                }}
-              >
-                <div className="w-48 h-48 border-4 border-fortune-gold rounded-full" />
-              </motion.div>
-            </motion.div>
+            )}
 
             {/* App name */}
             <motion.div
