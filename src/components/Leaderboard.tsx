@@ -4,6 +4,8 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Trophy, Medal, Crown, Star, Users, Coins, Zap, Target } from 'lucide-react';
+import { Canvas } from '@react-three/fiber';
+import { Trophy3D } from '@/components/3D/Trophy3D';
 
 interface LeaderboardPlayer {
   id: string;
@@ -117,7 +119,17 @@ export const Leaderboard: React.FC<LeaderboardProps> = ({ currentPlayer }) => {
           >
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-3">
-                {getPositionIcon(player.position)}
+                {player.position <= 3 ? (
+                  <div className="w-16 h-16">
+                    <Canvas camera={{ position: [0, 0, 3], fov: 50 }}>
+                      <ambientLight intensity={0.5} />
+                      <directionalLight position={[2, 2, 2]} intensity={1} />
+                      <Trophy3D rank={player.position as 1 | 2 | 3} scale={0.8} />
+                    </Canvas>
+                  </div>
+                ) : (
+                  getPositionIcon(player.position)
+                )}
                 
                 <div className="flex items-center space-x-2">
                   <div className="w-8 h-8 bg-gradient-gold rounded-full flex items-center justify-center">

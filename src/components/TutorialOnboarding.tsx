@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { X, ArrowRight, Sparkles, Coins, Gift, Zap } from 'lucide-react';
+import { toast } from 'sonner';
 
 interface TutorialStep {
   id: number;
@@ -10,7 +11,23 @@ interface TutorialStep {
   description: string;
   icon: React.ElementType;
   gradient: string;
+  zodiacSelection?: boolean;
 }
+
+const zodiacSigns = [
+  { id: 'aries', name: 'Áries', symbol: '♈', color: '#FF4444' },
+  { id: 'taurus', name: 'Touro', symbol: '♉', color: '#44FF44' },
+  { id: 'gemini', name: 'Gêmeos', symbol: '♊', color: '#4444FF' },
+  { id: 'cancer', name: 'Câncer', symbol: '♋', color: '#FF44FF' },
+  { id: 'leo', name: 'Leão', symbol: '♌', color: '#FFD700' },
+  { id: 'virgo', name: 'Virgem', symbol: '♍', color: '#44FFFF' },
+  { id: 'libra', name: 'Libra', symbol: '♎', color: '#FF8844' },
+  { id: 'scorpio', name: 'Escorpião', symbol: '♏', color: '#8844FF' },
+  { id: 'sagittarius', name: 'Sagitário', symbol: '♐', color: '#FF4488' },
+  { id: 'capricorn', name: 'Capricórnio', symbol: '♑', color: '#44FF88' },
+  { id: 'aquarius', name: 'Aquário', symbol: '♒', color: '#8844FF' },
+  { id: 'pisces', name: 'Peixes', symbol: '♓', color: '#FF88FF' }
+];
 
 const steps: TutorialStep[] = [
   {
@@ -36,16 +53,25 @@ const steps: TutorialStep[] = [
   },
   {
     id: 4,
+    title: '🔮 Escolha seu Signo',
+    description: 'Selecione seu signo zodiacal para personalizar sua experiência 3D!',
+    icon: Sparkles,
+    gradient: 'from-pgbet-purple to-fortune-gold',
+    zodiacSelection: true
+  },
+  {
+    id: 5,
     title: '⚡ Girar Agora!',
     description: 'Toque no botão dourado para começar. Boa sorte e divirta-se com responsabilidade!',
     icon: Zap,
-    gradient: 'from-pgbet-purple to-fortune-gold'
+    gradient: 'from-fortune-gold to-pgbet-purple'
   }
 ];
 
 export const TutorialOnboarding: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
+  const [selectedZodiac, setSelectedZodiac] = useState<string>('');
 
   useEffect(() => {
     const hasSeenTutorial = localStorage.getItem('hasSeenTutorial');
@@ -55,9 +81,20 @@ export const TutorialOnboarding: React.FC = () => {
   }, []);
 
   const handleNext = () => {
+    const step = steps[currentStep];
+    
+    // Validate zodiac selection
+    if (step.zodiacSelection && !selectedZodiac) {
+      toast.error('Por favor, escolha seu signo!');
+      return;
+    }
+    
     if (currentStep < steps.length - 1) {
       setCurrentStep(prev => prev + 1);
     } else {
+      if (selectedZodiac) {
+        localStorage.setItem('zodiacSign', selectedZodiac);
+      }
       handleClose();
     }
   };
@@ -128,6 +165,26 @@ export const TutorialOnboarding: React.FC = () => {
               <p className="text-center text-gray-300 text-lg leading-relaxed">
                 {step.description}
               </p>
+
+              {/* Zodiac Selection */}
+              {step.zodiacSelection && (
+                <div className="grid grid-cols-3 gap-3 my-6">
+                  {zodiacSigns.map((sign) => (
+                    <button
+                      key={sign.id}
+                      onClick={() => setSelectedZodiac(sign.id)}
+                      className={`p-3 rounded-lg border-2 transition-all hover:scale-105 ${
+                        selectedZodiac === sign.id
+                          ? 'border-fortune-gold bg-fortune-gold/20 shadow-lg shadow-fortune-gold/50'
+                          : 'border-gray-600 hover:border-fortune-gold/50 bg-black/20'
+                      }`}
+                    >
+                      <div className="text-3xl mb-1">{sign.symbol}</div>
+                      <div className="text-[10px] font-medium text-gray-300">{sign.name}</div>
+                    </button>
+                  ))}
+                </div>
+              )}
 
               {/* Progress dots */}
               <div className="flex justify-center gap-2">

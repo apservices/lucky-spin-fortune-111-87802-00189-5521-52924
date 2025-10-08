@@ -5,7 +5,7 @@
 
 import * as THREE from 'three';
 
-type ParticleType3D = 'coin' | 'sparkle' | 'star' | 'petal' | 'burst';
+export type ParticleType3D = 'coin' | 'sparkle' | 'star' | 'petal' | 'burst';
 
 interface Particle3D {
   position: THREE.Vector3;
