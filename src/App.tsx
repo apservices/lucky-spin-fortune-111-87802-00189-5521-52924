@@ -17,6 +17,8 @@ import BlackjackGame from '@/pages/BlackjackGame';
 import CrashGame from '@/pages/CrashGame';
 import PuzzleGame from '@/pages/PuzzleGame';
 import RouletteGame from '@/pages/RouletteGame';
+import TigerHuntGame from '@/pages/TigerHuntGame';
+import ZodiacWheel3DGame from '@/pages/ZodiacWheel3DGame';
 import NotFound from '@/pages/NotFound';
 
 // Lazy-loaded components for better performance
@@ -54,6 +56,8 @@ function App() {
           <Route path="/crash" element={<CrashGame />} />
           <Route path="/puzzle" element={<PuzzleGame />} />
           <Route path="/roulette" element={<RouletteGame />} />
+          <Route path="/tiger-hunt" element={<TigerHuntGame />} />
+          <Route path="/zodiac-wheel-3d" element={<ZodiacWheel3DGame />} />
               <Route path="/missions" element={<MissionsPage />} />
               <Route path="/achievements" element={<AchievementsPage />} />
               <Route path="/daily-rewards" element={<DailyRewardsPage />} />

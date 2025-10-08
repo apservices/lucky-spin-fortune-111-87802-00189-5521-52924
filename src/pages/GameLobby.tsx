@@ -87,6 +87,20 @@ const GameLobby: React.FC = () => {
       badge: 'Casual'
     },
     {
+      title: '🐅 Caça ao Tigre 3D',
+      subtitle: 'Mini-game interativo',
+      icon: Sparkles,
+      action: () => navigate('/tiger-hunt'),
+      badge: '3D Novo!'
+    },
+    {
+      title: '🎡 Roda Zodiacal 3D',
+      subtitle: 'Spin premium 3D',
+      icon: Star,
+      action: () => navigate('/zodiac-wheel-3d'),
+      badge: 'Premium'
+    },
+    {
       title: 'Loja de Moedas',
       subtitle: 'Adquirir moedas virtuais',
       icon: Coins,

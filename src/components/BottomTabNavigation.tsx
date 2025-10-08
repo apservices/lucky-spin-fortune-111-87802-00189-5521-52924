@@ -14,6 +14,7 @@ interface TabItem {
 const tabs: TabItem[] = [
   { id: 'home', label: 'Home', icon: Home, path: '/' },
   { id: 'wallet', label: 'Carteira', icon: Wallet, path: '/coin-store' },
+  { id: 'tiger', label: 'Tigre 3D', icon: Sparkles, path: '/tiger-hunt', badge: '3D' },
   { id: 'bonus', label: 'Bônus', icon: Gift, path: '/daily-rewards', badge: '!' },
   { id: 'profile', label: 'Perfil', icon: User, path: '/settings' }
 ];

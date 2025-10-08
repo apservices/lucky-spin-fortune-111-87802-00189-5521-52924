@@ -1,7 +1,7 @@
 {
-  "name": "Fortune Tiger - Zodiac Slots Premium",
-  "short_name": "Fortune Tiger",
-  "description": "🐅 Jogo Tigrinho Premium! Gire a roda zodiacal e ganhe moedas virtuais. Jogo recreativo +18, 100% diversão!",
+  "name": "Fortune Tiger 3D: Tigrinho Grátis com Animações Épicas 2025",
+  "short_name": "Fortune Tiger 3D",
+  "description": "🐅 Tigrinho Premium 3D! Roda zodiacal 3D, tigre animado, gráficos épicos inspirados em PG Soft. Mini-games interativos, prêmios diários. +18, 100% diversão responsável BR!",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#000000",
@@ -30,7 +30,7 @@
     }
   ],
   "categories": ["games", "entertainment"],
-  "keywords": ["fortune tiger", "tigrinho", "slots", "jogo", "zodiac", "brasil", "moedas virtuais", "cassino social"],
+  "keywords": ["fortune tiger 3d", "tigrinho 3d", "slots 3d brasil", "pg soft", "animações 3d", "webgl slots", "zodiac wheel", "caça tigre", "fortune tiger", "tigrinho", "slots", "jogo", "zodiac", "brasil", "moedas virtuais", "cassino social"],
   "lang": "pt-BR",
   "dir": "ltr"
 }
