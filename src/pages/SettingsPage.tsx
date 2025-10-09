@@ -14,6 +14,7 @@ import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { useGameState } from '@/systems/GameStateSystem';
+import { usePerformance3D } from '@/hooks/usePerformance3D';
 import { ParticleBackground } from '@/components/ParticleBackground';
 import { toast } from 'sonner';
 
@@ -23,16 +24,17 @@ const SettingsPage: React.FC = () => {
   const [showThemeSystem, setShowThemeSystem] = useState(false);
   const [currentTheme, setCurrentTheme] = useState<GameTheme>('classic');
   
-  // 3D Settings
-  const [enable3D, setEnable3D] = useState(
-    localStorage.getItem('enable3D') !== 'false'
-  );
-  const [particleQuality, setParticleQuality] = useState<'low' | 'medium' | 'high'>(
-    (localStorage.getItem('particleQuality') as 'low' | 'medium' | 'high') || 'medium'
-  );
-  const [enablePostProcessing, setEnablePostProcessing] = useState(
-    localStorage.getItem('enablePostProcessing') !== 'false'
-  );
+  // Use Performance3D hook
+  const {
+    enable3D,
+    particleQuality,
+    postProcessing,
+    adaptiveQuality,
+    toggle3D,
+    forceQuality,
+    togglePostProcessing,
+    toggleAdaptiveQuality
+  } = usePerformance3D();
 
   const handleThemeChange = (theme: GameTheme) => {
     setCurrentTheme(theme);
@@ -40,30 +42,25 @@ const SettingsPage: React.FC = () => {
   };
 
   const handle3DToggle = (enabled: boolean) => {
-    setEnable3D(enabled);
-    localStorage.setItem('enable3D', String(enabled));
+    toggle3D();
     toast.success(enabled ? 'Gráficos 3D ativados!' : 'Gráficos 3D desativados');
   };
 
   const handleParticleQualityChange = (quality: 'low' | 'medium' | 'high') => {
-    setParticleQuality(quality);
-    localStorage.setItem('particleQuality', quality);
+    forceQuality(quality);
     toast.success(`Qualidade de partículas: ${quality === 'low' ? 'Baixa' : quality === 'medium' ? 'Média' : 'Alta'}`);
   };
 
   const handlePostProcessingToggle = (enabled: boolean) => {
-    setEnablePostProcessing(enabled);
-    localStorage.setItem('enablePostProcessing', String(enabled));
+    togglePostProcessing();
     toast.success(enabled ? 'Post-processing ativado' : 'Post-processing desativado');
   };
 
   const resetSettings = () => {
-    localStorage.removeItem('enable3D');
-    localStorage.removeItem('particleQuality');
-    localStorage.removeItem('enablePostProcessing');
-    setEnable3D(true);
-    setParticleQuality('medium');
-    setEnablePostProcessing(true);
+    forceQuality('medium');
+    if (!enable3D) toggle3D();
+    if (!postProcessing) togglePostProcessing();
+    if (!adaptiveQuality) toggleAdaptiveQuality();
     toast.success('Configurações 3D resetadas!');
   };
 
@@ -167,7 +164,7 @@ const SettingsPage: React.FC = () => {
                 </div>
                 <Switch
                   id="post-processing"
-                  checked={enablePostProcessing}
+                  checked={postProcessing}
                   onCheckedChange={handlePostProcessingToggle}
                 />
               </div>

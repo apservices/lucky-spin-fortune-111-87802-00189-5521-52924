@@ -5,6 +5,7 @@ import { ConsentBanner } from '@/components/analytics/ConsentBanner';
 import { GameTransitionManager } from '@/components/GameTransitionManager';
 import { OptimizedPerformanceManager } from '@/components/OptimizedPerformanceManager';
 import { PWAInstallPrompt } from '@/components/PWAInstallPrompt';
+import { PerformanceDebugger } from '@/components/PerformanceDebugger';
 import { Suspense, lazy } from 'react';
 import { AgeVerification } from '@/components/AgeVerification';
 import { ResponsibleGamingWarnings } from '@/components/ResponsibleGamingWarnings';
@@ -81,6 +82,7 @@ function App() {
         <ConsentBanner />
           <PWAInstallPrompt />
           <OptimizedPerformanceManager />
+          <PerformanceDebugger />
         </Router>
       </PremiumThemeProvider>
     </GameStateProvider>

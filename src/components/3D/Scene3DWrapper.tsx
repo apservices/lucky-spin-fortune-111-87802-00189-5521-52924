@@ -6,7 +6,7 @@
 import React, { Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Environment, PerspectiveCamera } from '@react-three/drei';
-import { usePerformanceOptimization } from '@/hooks/usePerformanceOptimization';
+import { usePerformance3D } from '@/hooks/usePerformance3D';
 
 interface Scene3DWrapperProps {
   children: React.ReactNode;
@@ -21,20 +21,19 @@ export const Scene3DWrapper: React.FC<Scene3DWrapperProps> = ({
   cameraPosition = [0, 0, 5],
   fallback = <div className="w-full h-full bg-gradient-to-br from-black via-pgbet-dark to-black animate-pulse" />
 }) => {
-  const { metrics } = usePerformanceOptimization();
+  const { qualitySettings, enable3D } = usePerformance3D();
 
-  // Adaptive quality based on device capabilities
-  const dpr = metrics.fps < 30 ? 1 : window.devicePixelRatio;
-  const shadows = metrics.fps > 50;
-  const antialias = metrics.fps > 45;
+  if (!enable3D) {
+    return null;
+  }
 
   return (
     <Suspense fallback={fallback}>
       <Canvas
-        dpr={dpr}
-        shadows={shadows}
+        dpr={qualitySettings.pixelRatio}
+        shadows={qualitySettings.shadowMapSize > 512}
         gl={{ 
-          antialias,
+          antialias: qualitySettings.antialias,
           alpha: true,
           powerPreference: 'high-performance',
           stencil: false,
@@ -58,7 +57,7 @@ export const Scene3DWrapper: React.FC<Scene3DWrapperProps> = ({
           position={[5, 5, 5]}
           intensity={1.2}
           color="#FFD700"
-          castShadow={shadows}
+          castShadow={qualitySettings.shadowMapSize > 512}
         />
         <directionalLight
           position={[-5, 3, -5]}
@@ -67,7 +66,7 @@ export const Scene3DWrapper: React.FC<Scene3DWrapperProps> = ({
         />
 
         {/* Environment HDR for reflections */}
-        {metrics.fps > 45 && (
+        {qualitySettings.antialias && (
           <Environment preset="sunset" background={false} />
         )}
 
