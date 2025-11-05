@@ -14,6 +14,7 @@ import { PremiumThemeProvider } from '@/components/PremiumThemeProvider';
 // Core components (always loaded)
 import GameLobby from '@/pages/GameLobby';
 import GamePlay from '@/pages/GamePlay';
+import SlotGame from '@/pages/SlotGame';
 import BlackjackGame from '@/pages/BlackjackGame';
 import CrashGame from '@/pages/CrashGame';
 import PuzzleGame from '@/pages/PuzzleGame';
@@ -51,7 +52,8 @@ function App() {
             <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary"></div>
           </div>}>
             <Routes>
-              <Route path="/" element={<GameLobby />} />
+              <Route path="/" element={<SlotGame />} />
+              <Route path="/lobby" element={<GameLobby />} />
               <Route path="/game" element={<GamePlay />} />
           <Route path="/blackjack" element={<BlackjackGame />} />
           <Route path="/crash" element={<CrashGame />} />

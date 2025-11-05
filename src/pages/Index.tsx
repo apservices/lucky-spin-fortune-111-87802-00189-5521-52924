@@ -1,3 +1,3 @@
-import GameLobby from '@/pages/GameLobby';
+import SlotGame from '@/pages/SlotGame';
 
-export default GameLobby;
+export default SlotGame;
