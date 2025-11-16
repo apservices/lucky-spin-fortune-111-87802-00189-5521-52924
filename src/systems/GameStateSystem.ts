@@ -10,11 +10,13 @@ import { useTransactionHistory } from '@/hooks/useTransactionHistory';
 export interface GameState {
   // Player Stats
   coins: number;
+  premiumCoins: number; // Nova moeda premium
   energy: number;
   maxEnergy: number;
   level: number;
   experience: number;
   maxExperience: number;
+  betAmount: number; // Valor da aposta atual
   
   // Game Progress
   totalSpins: number;
@@ -49,6 +51,9 @@ export type GameAction =
   | { type: 'SET_COINS'; payload: number }
   | { type: 'ADD_COINS'; payload: number }
   | { type: 'SPEND_COINS'; payload: number }
+  | { type: 'SET_PREMIUM_COINS'; payload: number }
+  | { type: 'ADD_PREMIUM_COINS'; payload: number }
+  | { type: 'SET_BET_AMOUNT'; payload: number }
   | { type: 'SET_ENERGY'; payload: number }
   | { type: 'USE_ENERGY'; payload: number }
   | { type: 'ADD_ENERGY'; payload: number }
@@ -73,6 +78,8 @@ export type GameAction =
 // Initial State
 const initialState: GameState = {
   coins: 1000,
+  premiumCoins: 0,
+  betAmount: 10,
   energy: 5,
   maxEnergy: 10,
   level: 1,
@@ -110,6 +117,15 @@ function gameStateReducer(state: GameState, action: GameAction): GameState {
     
     case 'SPEND_COINS':
       return { ...state, coins: Math.max(0, state.coins - action.payload) };
+    
+    case 'SET_PREMIUM_COINS':
+      return { ...state, premiumCoins: Math.max(0, action.payload) };
+    
+    case 'ADD_PREMIUM_COINS':
+      return { ...state, premiumCoins: state.premiumCoins + action.payload };
+    
+    case 'SET_BET_AMOUNT':
+      return { ...state, betAmount: Math.max(10, action.payload) };
     
     case 'SET_ENERGY':
       return { ...state, energy: Math.min(Math.max(0, action.payload), state.maxEnergy) };
@@ -265,6 +281,9 @@ export const useGameActions = () => {
     setCoins: (amount: number) => dispatch({ type: 'SET_COINS', payload: amount }),
     addCoins: (amount: number) => dispatch({ type: 'ADD_COINS', payload: amount }),
     spendCoins: (amount: number) => dispatch({ type: 'SPEND_COINS', payload: amount }),
+    setPremiumCoins: (amount: number) => dispatch({ type: 'SET_PREMIUM_COINS', payload: amount }),
+    addPremiumCoins: (amount: number) => dispatch({ type: 'ADD_PREMIUM_COINS', payload: amount }),
+    setBetAmount: (amount: number) => dispatch({ type: 'SET_BET_AMOUNT', payload: amount }),
     setEnergy: (amount: number) => dispatch({ type: 'SET_ENERGY', payload: amount }),
     useEnergy: (amount: number = 1) => dispatch({ type: 'USE_ENERGY', payload: amount }),
     addEnergy: (amount: number) => dispatch({ type: 'ADD_ENERGY', payload: amount }),
