@@ -15,6 +15,15 @@ export enum GameEventType {
   ENERGY_DEPLETED = 'player:energyDepleted',
   COINS_SPENT = 'player:coinsSpent',
   
+  // Currency Events
+  CURRENCY_TRANSACTION = 'currency:transaction',
+  COINS_EARNED = 'currency:earned',
+  
+  // Respin Events
+  RESPIN_ACTIVATED = 'respin:activated',
+  RESPIN_EXECUTED = 'respin:executed',
+  RESPIN_FULL_GRID = 'respin:fullGrid',
+  
   // UI Events
   THEME_CHANGED = 'ui:themeChanged',
   SETTINGS_UPDATED = 'ui:settingsUpdated',
@@ -48,6 +57,13 @@ export interface GameEventData {
   [GameEventType.LEVEL_UP]: { oldLevel: number; newLevel: number; bonus: number };
   [GameEventType.ENERGY_DEPLETED]: { timestamp: number };
   [GameEventType.COINS_SPENT]: { amount: number; reason: string };
+  
+  [GameEventType.CURRENCY_TRANSACTION]: { type: string; currency: string; amount: number; source: string };
+  [GameEventType.COINS_EARNED]: { amount: number; type: string; source: string };
+  
+  [GameEventType.RESPIN_ACTIVATED]: { stickySymbol: string; count: number };
+  [GameEventType.RESPIN_EXECUTED]: { respinNumber: number; stickyCount: number };
+  [GameEventType.RESPIN_FULL_GRID]: { stickySymbol: string; multiplier: number };
   
   [GameEventType.THEME_CHANGED]: { oldTheme: string | null; newTheme: string | null };
   [GameEventType.SETTINGS_UPDATED]: { section: string; changes: Record<string, any> };

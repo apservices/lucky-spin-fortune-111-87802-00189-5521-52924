@@ -8,6 +8,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useGameState, useGameActions } from '@/systems/GameStateSystem';
+import { currencySystem } from '@/systems/CurrencySystem';
+import { respinSystem } from '@/systems/RespinSystem';
+import { GAME_SYMBOLS } from '@/systems/GameLogic';
+import { InteractiveTutorial } from '@/components/InteractiveTutorial';
 import { toast } from '@/hooks/use-toast';
 import { 
   PlayCircle, 
@@ -18,7 +22,9 @@ import {
   Volume2,
   VolumeX,
   Plus,
-  Minus
+  Minus,
+  Coins,
+  Gem
 } from 'lucide-react';
 
 // Fallback seguro para confetti
@@ -58,7 +64,8 @@ interface HistoryItem {
 
 export const PremiumSlotMachineGame: React.FC = () => {
   const { state } = useGameState();
-  const { setCoins } = useGameActions();
+  const { setCoins, setBetAmount } = useGameActions();
+  const [showTutorial, setShowTutorial] = useState(false);
   
   const [reels, setReels] = useState<string[][]>([]);
   const [isSpinning, setIsSpinning] = useState(false);

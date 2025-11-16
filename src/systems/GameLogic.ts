@@ -19,74 +19,101 @@ export interface GameSymbol {
 }
 
 export const GAME_SYMBOLS: Record<string, GameSymbol> = {
-  // Common symbols (60% chance)
-  envelope: {
-    id: 'envelope',
-    name: 'Envelope',
-    emoji: '✉️',
+  // Common symbols (50% total)
+  rat: {
+    id: 'rat',
+    name: 'Rato',
+    emoji: '🐭',
     rarity: 'common',
     baseValue: 5,
     multipliers: [1, 2, 3, 5],
     winSound: 'coin_small'
   },
-  orange: {
-    id: 'orange',
-    name: 'Orange',
-    emoji: '🍊',
+  ox: {
+    id: 'ox',
+    name: 'Boi',
+    emoji: '🐂',
     rarity: 'common',
     baseValue: 8,
     multipliers: [1, 2, 4, 6],
     winSound: 'coin_small'
   },
-  frog: {
-    id: 'frog',
-    name: 'Frog',
-    emoji: '🐸',
+  rabbit: {
+    id: 'rabbit',
+    name: 'Coelho',
+    emoji: '🐰',
     rarity: 'common',
     baseValue: 10,
     multipliers: [1, 3, 5, 8],
     winSound: 'coin_medium'
   },
   
-  // Rare symbols (25% chance)
-  fox: {
-    id: 'fox',
-    name: 'Fox',
-    emoji: '🦊',
+  // Rare symbols (30% total)
+  snake: {
+    id: 'snake',
+    name: 'Serpente',
+    emoji: '🐍',
     rarity: 'rare',
     baseValue: 15,
     multipliers: [2, 5, 8, 12],
     winSound: 'coin_medium'
   },
-  scroll: {
-    id: 'scroll',
-    name: 'Scroll',
-    emoji: '📜',
+  horse: {
+    id: 'horse',
+    name: 'Cavalo',
+    emoji: '🐴',
+    rarity: 'rare',
+    baseValue: 18,
+    multipliers: [2, 6, 10, 14],
+    winSound: 'coin_large'
+  },
+  monkey: {
+    id: 'monkey',
+    name: 'Macaco',
+    emoji: '🐵',
     rarity: 'rare',
     baseValue: 20,
     multipliers: [2, 6, 10, 15],
     winSound: 'coin_large'
   },
   
-  // Epic symbols (12% chance)
+  // Epic symbols (15% total)
   tiger: {
     id: 'tiger',
-    name: 'Tiger',
+    name: 'Tigre',
     emoji: '🐯',
     rarity: 'epic',
-    baseValue: 50,
+    baseValue: 40,
     multipliers: [3, 8, 15, 25],
     winSound: 'win_big'
   },
+  rooster: {
+    id: 'rooster',
+    name: 'Galo',
+    emoji: '🐓',
+    rarity: 'epic',
+    baseValue: 50,
+    multipliers: [3, 10, 18, 30],
+    winSound: 'win_big'
+  },
   
-  // Legendary symbols (3% chance)
+  // Legendary symbols (5% total)
   dragon: {
     id: 'dragon',
-    name: 'Golden Dragon',
+    name: 'Dragão Dourado',
     emoji: '🐲',
     rarity: 'legendary',
     baseValue: 100,
     multipliers: [5, 15, 30, 50],
+    winSound: 'jackpot'
+  },
+  phoenix: {
+    id: 'phoenix',
+    name: 'Fênix',
+    emoji: '🦅',
+    rarity: 'legendary',
+    baseValue: 150,
+    multipliers: [8, 20, 40, 80],
     winSound: 'jackpot'
   }
 };
@@ -148,14 +175,18 @@ export class GameLogic {
    * Generate symbol weights based on configuration
    */
    private getSymbolWeights(): Array<{ symbol: GameSymbol; weight: number }> {
-    // Use default probabilities if config is not loaded
+    // Chinese Zodiac probabilities - balanced for fair gameplay
     const defaultProbabilities: Record<string, number> = {
-      'tiger': 0.02,
-      'fox': 0.08,
-      'frog': 0.12,
-      'envelope': 0.18,
-      'orange': 0.25,
-      'scroll': 0.15
+      'rat': 0.15,
+      'ox': 0.18,
+      'rabbit': 0.17,
+      'snake': 0.12,
+      'horse': 0.10,
+      'monkey': 0.08,
+      'tiger': 0.08,
+      'rooster': 0.07,
+      'dragon': 0.03,
+      'phoenix': 0.02
     };
     
     let probabilities = defaultProbabilities;
